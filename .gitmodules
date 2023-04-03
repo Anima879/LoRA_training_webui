@@ -1,0 +1,3 @@
+[submodule "LoRA_Easy_Training_Scripts"]
+	path = LoRA_Easy_Training_Scripts
+	url = https://github.com/derrian-distro/LoRA_Easy_Training_Scripts

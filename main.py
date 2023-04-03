@@ -1,16 +1,35 @@
-# This is a sample Python script.
+import json
+import tkinter as tk
 
-# Press Maj+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import streamlit as st
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+from components import DirPath
+from config_component import render_config
 
 
-# Press the green button in the gutter to run the script.
+def main():
+    root = tk.Tk()
+    root.withdraw()
+    root.wm_attributes('-topmost', 1)
+
+    st.title("LoRA training webui")
+
+    multiple_trainings = st.checkbox("Run multiple trainings", key="multiple_trainings")
+
+    if multiple_trainings:
+        DirPath("Configs directory", root).render()
+        st.button("Start")
+        # TODO : skip
+    else:
+        config_file = st.file_uploader("Config file", type="json")
+        if not config_file:
+            render_config(root)
+        else:
+            config_dict = json.load(config_file)
+            render_config(root, config_dict)
+
+    st.button("Train")
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    main()
